@@ -1,6 +1,72 @@
-﻿@{
-    ViewData["Title"] = "Add Assets";
+﻿@model List<Application.ViewModels.AddAssetsModelView>
+@{
+    ViewData["Title"] = "Add New Asset";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+@if (!string.IsNullOrWhiteSpace(ViewBag.message))
+{
+    <div class="alert @ViewBag.MessageType alert-dismissible fade show" role="alert">
+        @ViewBag.Message
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="row">
+    <h1 class="text-center">Add New Asset</h1>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-warning text-light">
+                <h5 class="text-center">Historical Asset Data (20 Days)</h5>
+            </div>
+            <div class="card-body">
+                <form asp-controller="Assets" asp-action="AddAssets" method="post">
+
+                    <div class="row mb-4">
+                        <div class="col-12 col-md-6 offset-md-3">
+                            <div class="mb-3">
+                                <label for="assetName" class="form-label">Asset Name:</label>
+                                <input type="text" class="form-control" name="[0].Name" placeholder="e.g., AAPL, Bitcoin, Tesla" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        @for (int i = 0; i < 20; i++)
+                        {
+                            <div class="col-12 col-md-6 col-lg-4 mb-3">
+                                <div class="card">
+                                    <div class="card-header bg-secondary text-light">
+                                        <h6 class="text-center mb-0">Day #@(i + 1)</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-2">
+                                            <label class="form-label">Date:</label>
+                                            <input type="date" class="form-control" name="[@i].Date" required>
+                                        </div>
+                                        <div class="mb-2">
+                                            <label class="form-label">Price ($):</label>
+                                            <input type="number" class="form-control" name="[@i].Price" step="0.01" min="0" placeholder="0.00" required>
+                                        </div>
+                                        <input type="hidden" name="[@i].Name">
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div>
+                                <a asp-controller="Assets" asp-action="Index" class="btn btn-outline-warning float-end">Back to Home</a>
+                                <button type="submit" class="btn btn-outline-primary float-end me-2">Calculate Prediction</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
