@@ -19,13 +19,19 @@ namespace Indicators.Controllers
 
         public IActionResult Index()
         {
-            return View();
+           var assetsName = _assetsService.GetAllAssets().Select(a => a.Name);
+            NameIssetsViewModel assetsNamesModel = new NameIssetsViewModel
+            {
+                names = assetsName.ToList()
+            };
+
+            return View(assetsNamesModel);
         }
 
         [HttpPost]        
         public IActionResult Index(string indicatorType)
         {
-           if(string.IsNullOrWhiteSpace(indicatorType)) 
+           if(!string.IsNullOrWhiteSpace(indicatorType)) 
             {
 
                 List<CalculatedAssetsDto> prediction = IndicatorsPrediccion.Prediccion(indicatorType, _assetsService.GetAllAssets());
@@ -36,7 +42,8 @@ namespace Indicators.Controllers
                     AssetsName = a.AssetsName,
                     IndicatorName = a.IndicatorName,
                     Price = a.Price,
-                    Trend = a.Trend
+                    Trend = a.Trend,
+                    Details = a.Details
                 }).ToList();
 
                 return View(model);
