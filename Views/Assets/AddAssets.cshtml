@@ -1,4 +1,4 @@
-﻿@model Application.ViewModels.AddAssetsModelView
+﻿@model Application.ViewModels.AddAssetsViewModel
 @{
     ViewData["Title"] = "Add New Asset";
 }
@@ -17,7 +17,7 @@
                 <h5 class="text-center">Add New Asset</h5>
             </div>
             <div class="card-body">
-                <form asp-controller="Assets" asp-action="AddAssets" method="post">
+                <form asp-controller="Assets" asp-action="AddAssets" method="post" novalidate>
                     <div class="mb-3">
                         <label class="form-label">Asset Name:</label>
                         <input type="text" asp-for="Name" class="form-control" placeholder="Ej: Bitcoin, Tesla" required />
@@ -31,6 +31,7 @@
                                 <div class="card border-secondary">
                                     <div class="card-header bg-secondary text-light py-1"></div>
                                     <div class="card-body py-2">
+                                         <label class="form-label small">Day @(i + 1):</label>
                                         <div class="row">
                                             <div class="col-6">
                                                 <label class="form-label small">Date:</label>

@@ -20,10 +20,10 @@
             <div class="card-body">
                 <form asp-controller="Assets" asp-action="Index" method="post">
                     <div class="mb-3">
-                        <label for="indicatorType" class="form-label">Indicator Type:</label>
+                        <label for="indicatorType" class="form-label">Indicator Mode:</label>
                         <select name="indicatorType" class="form-select" required>
-                            <option value="sma">Media Móvil Simple (SMA) Crossover</option>
-                            <option value="rl">Regresión Lineal</option>
+                            <option value="sma">Simple Movil Average (SMA)</option>
+                            <option value="rl">Linear Regression</option>
                             <option value="roc">Momentum (ROC)</option>
                         </select>
                     </div>
@@ -53,7 +53,7 @@
                 }
                 else
                 {
-                    <p class="text-muted">No assets registered yet.</p>
+                    <p class="text-muted">No assets registered.</p>
                 }
             </div>
         </div>
@@ -64,7 +64,7 @@
 <div class="row">
     <div class="col-12">
         <table class="table table-bordered table-striped">
-            <thead class="table-dark">
+            <thead class="table-light">
                 <tr>
                     <th>Asset Name</th>
                     <th>Indicator</th>
@@ -76,14 +76,14 @@
                 @if (Model == null || Model.Count == 0)
                 {
                     <tr>
-                        <td colspan="4" class="text-center text-muted">No assets yet</td>
+                        <td colspan="4" class="text-center text-muted">No assets</td>
                     </tr>
                 }
                 else
                 {
                     @foreach (var asset in Model)
                     {
-                        <tr class="@(asset.Trend == "Alcista" || asset.Trend == "Bullish" ? "table-success" : "table-danger")">
+                        <tr class="@(asset.Trend == "Bullish" ? "table-success" : "table-danger")">
                             <td>@asset.AssetsName</td>
                             <td>@asset.IndicatorName</td>
                             <td>@asset.Price</td>
